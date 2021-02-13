@@ -1,0 +1,28 @@
+GET /users​/{userId}​/contacts​/{contactId} ERR
+PUT /users​/{userId}​/contacts​/{contactId} ERR
+DELETE /users​/{userId}​/contacts​/{contactId} ERR
+GET /users​/{userId}​/contacts OK
+POST /users​/{userId}​/contacts OK
+GET /users​/{userId}​/contacts​/search ERR
+GET /users OK
+POST /users OK
+GET /users/{userId} OK
+PUT /users/{userId} OK
+DELETE /users/{userId} ERR
+GET /users/search BUG
+
+GET /users​/{userId}​/contacts​/{contactId}: only http://localhost:8080/users/{userId}/contacts/1 sends a contact, which may be with wrong id. if contactId not 1 it won't send contact 
+
+PUT /users​/{userId}​/contacts​/{contactId}: this one updates contact of another user, not the supposed one
+
+DELETE /users​/{userId}​/contacts​/{contactId}: cannot find contacts to delete if they were created or updated by api
+
+GET /users​/{userId}​/contacts​/search: userId parameter is not working
+
+DELETE /users/{userId} cannot delete users with ids 1 and 2
+
+GET /users/search searches only firstName, not the last
+
+
+
+
