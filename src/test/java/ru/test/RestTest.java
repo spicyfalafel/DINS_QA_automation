@@ -10,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.is;
 
 public class RestTest {
@@ -27,16 +28,16 @@ public class RestTest {
 
     @Test
     public void createUserShouldReturn201() {
-        JSONObject requestParams = new JSONObject();
-        requestParams.put("firstName", "AAA");
-        requestParams.put("lastName", "BBB");
-        requestParams.put("phone", "5321456789");
-        requestParams.put("email", "I_Am_KEK@kekmail.com");
+        JSONObject user = new JSONObject();
+        user.put("firstName", "AAA");
+        user.put("lastName", "BBB");
+        user.put("phone", "5321456789");
+        user.put("email", "I_Am_KEK@kekmail.com");
 
         given()
                 .spec(spec)
                 .when()
-                .body(requestParams.toJSONString())
+                .body(user.toJSONString())
                 .post("users")
                 .then()
                 .statusCode(HttpStatus.SC_CREATED);
@@ -56,23 +57,30 @@ public class RestTest {
     }
 
     @Test
-    public void getContactFromCertainUser() {
+    public void getContactsUserWithBadId() {
         given()
                 .spec(spec)
                 .when()
-                .get("users/1/contacts/2")
+                .get("users/-1/contacts/")
                 .then()
-                .statusCode(HttpStatus.SC_OK);
+                .statusCode(HttpStatus.SC_NOT_FOUND);
     }
 
+
+
     @Test
-    public void findContactById() {
+    public void createUserFirstNameBetween2And15() {
+        JSONObject user = new JSONObject();
+        user.put("firstName", "A");
+        user.put("lastName", "B");
+
         given()
                 .spec(spec)
-                .param("userId", "2")
-                .when()
-                .get("users/1/contacts/search")
+                .body(user.toJSONString())
+                .post("users")
                 .then()
-                .statusCode(HttpStatus.SC_OK);
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .body("$", hasKey("firstName"))
+                .body("size()", is(1));
     }
 }

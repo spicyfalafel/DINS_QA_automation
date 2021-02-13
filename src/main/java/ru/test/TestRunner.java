@@ -9,10 +9,9 @@ public class TestRunner {
         Result result = JUnitCore.runClasses(RestTest.class);
 
         for (Failure failure : result.getFailures()) {
-            System.out.println("----------------");
             System.out.println(failure.toString());
         }
 
-        System.out.println("All tests passed: " + result.wasSuccessful());
+        System.out.println(result.wasSuccessful());
     }
 }  
