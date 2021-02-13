@@ -12,7 +12,10 @@ import org.junit.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.is;
-
+/*
+    I confess I couldn't create the jar properly using maven so I
+    copied tests here...
+ */
 public class RestTest {
     private static RequestSpecification spec;
 

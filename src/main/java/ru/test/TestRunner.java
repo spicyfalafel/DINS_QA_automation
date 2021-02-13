@@ -4,6 +4,11 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
+/*
+    I confess I couldn't create the jar properly using maven so I
+    copied tests here...
+ */
+
 public class TestRunner {
     public static void main(String[] args) {
         Result result = JUnitCore.runClasses(RestTest.class);
